@@ -37,13 +37,25 @@ class tree{
 			// Constructor. Crea un arbol vacio
 
 		tree(const tree<T>& obj){
-                    
+                    root=nullptr;
+                    copiarArbol(obj->getRoot());
 		};
 			// Constructor copia
 
 		~tree(){
                     borrarArbol(root);
 		};
+                
+                void copiarArbol(node<T> * x){
+                    node<T> *p = new node<T>(x->key);
+                    treeInsert(p);
+                    if(x->left!=nullptr){
+                    copiarArbol(x->left);
+                    }
+                    if(x->right!=nullptr){
+                    copiarArbol(x->right);
+                    }
+                }
                 
                 void borrarArbol(node<T>* x){
                     if(x!=nullptr){
@@ -84,7 +96,7 @@ class tree{
                 
                 node<T>* recSearch(const T& k,node<T> *x){
                     node<T> *ind = x;
-                    if(k==ind->key){
+                    if(!x || k==ind->key){
                         return ind;
                     }
                     if(k<ind->key){
@@ -101,12 +113,18 @@ class tree{
 
 		node<T>* iterativeTreeSearch(const T& k){
                     node<T> *ind = root;
-                    while(ind->key!=k){
+                    while(ind&&(ind->key!=k)){
                         if(k<ind->key){
-                            ind = ind->left;
+                            
+                                ind = ind->left;
+                            
+                                
                         } else {
+                            
                             ind = ind->right;
+                            
                         }
+                        
                     }
                     return ind;
 		};
@@ -136,7 +154,11 @@ class tree{
 		node<T>* treeSuccessor(const node<T>* x){
                     if(x->right!=nullptr){
                         return minizq(x->right);
-                    } 
+                    }else if(x->p->left!=nullptr){
+                        return x->p;
+                    } else {
+                        return x->p->p;
+                    }
 		};
                 
                 node<T>* minizq(node<T>* x){
@@ -154,25 +176,64 @@ class tree{
                     node<T> *p = root;
                     while(p!=nullptr){
                         a = p;
-                        if(z->key<p->key){
+                        if(z->key<=p->key){
                             p=p->left;
-                        } else if(z->key>p->key){
+                        } else if(z->key>=p->key){
                             p=p->right;
                         }
                     }
                     if(a==nullptr){
                        root =z;
-                    } else if(z->key<a->key){
+                    } else if(z->key<=a->key){
+                        z->p = a;
                         a->left = z;
                     } else {
+                        z->p = a;
                         a->right = z;
                     }
 		};
+                
+                void insertarDerecha(node<T>* z,node<T> * p){
+                    p->p = z;
+                    z->right = p;
+                }
 		// Inserta el nodo z en la posicion que le corresponde en el arbol.
 			
 		node<T>* treeDelete(node<T>* z){
-                    
-		};
+                    node<T> *p = treeSearch(z->key);
+                    if(p!=nullptr){
+                        if(p->left==nullptr&&p->right==nullptr){
+                            if(p->p->left==z){
+                                p->p->left=nullptr;
+                                
+                            } else {
+                                p->p->right=nullptr;
+                                
+                            }
+                        } else if((p->left!=nullptr&&p->right==nullptr)||(p->left==nullptr&&p->right!=nullptr)){
+                            if(p->p->left==z){
+                                p->p->left=p->left;
+                            } else {
+                                p->p->right=p->right;
+                                
+                            }
+                        } else if(p->left!=nullptr&&p->right!=nullptr){
+                            node<T> *s = treeSuccessor(z);
+                            p->key=s->key;
+                            if(s->left==nullptr&&s->right==nullptr){
+                                if(s->p->left==s){
+                                    s->p->left=nullptr;
+                                } else {
+                                    s->p->right=nullptr;
+                                }
+                            } else if(s->right!=nullptr){
+                                s->p->right=s->right;
+                            }
+                        }
+                            
+                    }
+		}
+             
 			// Saca del arbol la llave contenida en el nodo apuntado por z.
 			// Devuelve la direccion del nodo eliminado para que se pueda 
 			// disponer de ella.
