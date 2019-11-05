@@ -51,14 +51,14 @@ class rbtree{
 			
 		void inorderTreeWalk(rbnode<T>* x, stack<T> & pila){
 		};
-            // Efectua un recorrido en orden del subarbol cuya raíz es apuntada
+            // Efectua un recorrido en orden del subarbol cuya ra‚Äôz es apuntada
             // por x. En cada visita apila la llave de cada nodo y su color.
             // Es decir, cada vez que se llega a un nodo se ejecutan las 
             // instrucciones pila.push(x->key); y luego pila.push(colorDeX).
             // Para efectos de la tarea, si el color del nodo es rojo, 
             // ponga en la pila un 0, y si es negro, ponga un 1.
-            // Si se hace correctamente, al finalizar el método la pila debería 
-            // contener las llaves de los nodos del subárbol (y su color) 
+            // Si se hace correctamente, al finalizar el m≈Ωtodo la pila deber‚Äôa 
+            // contener las llaves de los nodos del sub‚Ä°rbol (y su color) 
             // ordenadas de mayor a menor.
 		
 		rbnode<T>* treeSearch(const T& k){
