@@ -30,7 +30,7 @@ class hasht{
 
 	private:
 		int numEntradas;
-			// Nœmero de entradas en la tabla
+			// NÅ“mero de entradas en la tabla
 		vector<list<T> > tabla;
 			// La tabla es un vector de listas de STL
 };
