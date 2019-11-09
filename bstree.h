@@ -67,7 +67,6 @@ class tree{
                         }
                         delete x;
                     }
-                    //delete x;
                 }
 			// Destructor (borra el arbol)
 			
@@ -191,6 +190,7 @@ class tree{
                         z->p = a;
                         a->right = z;
                     }
+                    
 		};
                 
                 void insertarDerecha(node<T>* z,node<T> * p){
